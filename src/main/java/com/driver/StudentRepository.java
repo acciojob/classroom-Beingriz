@@ -68,16 +68,20 @@ public class StudentRepository {
 
     //Delete Teacher by Teacher Name & its Students
     public void deleteTeacher(String teacherName){
-        if(teacher_student_db.containsKey(teacherName)){
-            teacher_student_db.remove(teacherName);
+        ArrayList<String> students = new ArrayList<>(teacher_student_db.get(teacherName));
+        for (String name: students ) {
+            student_db.remove(name);
         }
         teacher_db.remove(teacherName);
+        teacher_student_db.remove(teacherName);
 
     }
 
-    //Delete All teachers
+    //Delete All teachers, It shuld Delete Teacher from Teacher DB, Teacher and Student DB and From Studnet DB
     public void teachersAllDelete (){
-        teacher_db.clear();
+        for (String name: teacher_db.keySet()  ) {
+            deleteTeacher(name);
+        }
     }
 
 }
